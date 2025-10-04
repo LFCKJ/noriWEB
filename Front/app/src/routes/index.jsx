@@ -3,6 +3,8 @@ import App from '../App';
 import Main from '../pages/Main';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
+import ProtectedRoute from './protectedRoute';
+import Dashboard from '../pages/Dashboard';
 
 export default function Router() {
     return (
@@ -12,6 +14,16 @@ export default function Router() {
                 <Route index element={<Main />} />
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
+
+                {/* 보호된 페이지 */}
+                <Route
+                    path="dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
 
                 {/* 필요시 둘 중에 하나로 사용 */}
                 {/* 잘못된 경로일 때 */}
