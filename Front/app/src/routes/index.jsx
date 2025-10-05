@@ -5,15 +5,17 @@ import About from '../pages/About';
 import Contact from '../pages/Contact';
 import ProtectedRoute from './protectedRoute';
 import Dashboard from '../pages/Dashboard';
+import Test from '../pages/Test';
 
 export default function Router() {
     return (
         <Routes>
-            {/* App 안에 Outlet → Main/About/Contact 렌더링 */}
+            {/* App 안에 Outlet → Main/About/Contact... 렌더링 */}
             <Route path="/" element={<App />}>
                 <Route index element={<Main />} />
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
+                <Route path="test" element={<Test />} />
 
                 {/* 보호된 페이지 */}
                 <Route
