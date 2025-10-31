@@ -1,0 +1,33 @@
+.footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.footer-wapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-left-space,
+.footer-right-space {
+    flex: 1;
+}
+
+.footer-content-column-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 0 80px;
+}
+
+.footer-content-column-wrapper ul {
+    padding: 0 10px;
+}
+
+.footer-content-column-wrapper ul > li.title {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
