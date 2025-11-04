@@ -1,5 +1,5 @@
 // Button.stories.js
-import { Button } from '../components/Button';
+import { Button } from '../components';
 
 export default {
     title: 'Components/Button',
@@ -8,21 +8,23 @@ export default {
         layout: 'centered'
     },
     args: {
-        bgColor: '#007bff',
-        color: '#ffffff',
-        size: 'medium',
-        label: '버튼',
-        children: '버튼'
+        children: '버튼',
+        variant: 'default',
+        size: 'medium'
     },
     argTypes: {
-        bgColor: { control: 'color', description: '배경색' },
-        color: { control: 'color', description: '글자색' },
+        variant: {
+            control: 'select',
+            options: ['default', 'primary', 'secondary', 'danger', 'ghost'],
+            description: '버튼 스타일'
+        },
         size: {
             control: 'radio',
             options: ['small', 'medium', 'large'],
             description: '버튼 크기'
         },
-        label: { control: 'text', description: '버튼 텍스트' }
+        children: { control: 'text', description: '버튼 텍스트' },
+        disabled: { control: 'boolean', description: '비활성화 상태' }
     }
 };
 
