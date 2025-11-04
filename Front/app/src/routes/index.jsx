@@ -27,9 +27,33 @@ export default function Router() {
                         <Dashboard />
                         // </ProtectedRoute>
                     }>
-                    {/* 대시보드의 하위 라우트들 */}
-                    <Route index element={<DashboardHome />} />
-                    <Route path="test" element={<DashboardTest />} />
+                    {/* 그룹이 선택되지 않았을 때의 기본 페이지 */}
+                    <Route
+                        index
+                        element={
+                            <div className="welcome-message">
+                                <h2>환영합니다!</h2>
+                                <p>왼쪽에서 개인 공간이나 그룹을 선택해주세요.</p>
+                            </div>
+                        }
+                    />
+
+                    {/* 개인 공간 */}
+                    <Route path="personal">
+                        <Route index element={<DashboardHome />} />
+                        <Route path="projects" element={<div>내 프로젝트</div>} />
+                        <Route path="notes" element={<div>개인 노트</div>} />
+                        <Route path="settings" element={<div>개인 설정</div>} />
+                    </Route>
+
+                    {/* 특정 그룹의 대시보드 */}
+                    <Route path="groups/:groupId">
+                        <Route index element={<DashboardHome />} />
+                        <Route path="members" element={<div>멤버 관리</div>} />
+                        <Route path="settings" element={<div>그룹 설정</div>} />
+                        <Route path="analytics" element={<div>분석</div>} />
+                        <Route path="test" element={<DashboardTest />} />
+                    </Route>
                 </Route>
 
                 {/* 필요시 둘 중에 하나로 사용 */}
