@@ -8,6 +8,7 @@ export default function App() {
                 <nav>
                     <Link to="/">홈</Link> | <Link to="/about">소개</Link> |{' '}
                     <Link to="/contact">연락처</Link> | <Link to="/test">테스트</Link> |{' '}
+                    <Link to="/dashboard">대시보드</Link>
                 </nav>
             </header>
             <main>
