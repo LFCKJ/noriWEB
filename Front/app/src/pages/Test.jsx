@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import { Button } from '../components/Button';
-import { Dialog } from '../components/Dialog';
+import { Button, Dialog } from '../components';
 
 export default function Test() {
     const [open, setOpen] = useState(false);
 
     return (
         <div>
-            <Button label="Open Dialog" onClick={() => setOpen(true)} />
+            <Button onClick={() => setOpen(true)}>Open Dialog</Button>
 
             <Dialog open={open} onClose={() => setOpen(false)} title="Dialog Title">
                 <p>다이얼로그 창 테스트</p>
-                <Button label="닫기" onClick={() => setOpen(false)} />
+                <Button onClick={() => setOpen(false)}>닫기</Button>
             </Dialog>
         </div>
     );
