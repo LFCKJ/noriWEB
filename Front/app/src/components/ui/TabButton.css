@@ -1,0 +1,44 @@
+.tab-button {
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    color: #4f545c;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.tab-button:hover:not(.tab-button--disabled) {
+    background: #f2f3f5;
+    color: #2e3338;
+}
+
+.tab-button--active {
+    background: #5865f2;
+    color: white;
+}
+
+.tab-button--active:hover {
+    background: #4752c4;
+}
+
+.tab-button--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.tab-button:focus {
+    outline: 2px solid #5865f2;
+    outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .tab-button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}

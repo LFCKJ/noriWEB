@@ -1,0 +1,13 @@
+.tab-navigation {
+    display: flex;
+    gap: 4px;
+}
+
+@media (max-width: 768px) {
+    .tab-navigation {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 4px;
+        justify-content: center;
+    }
+}

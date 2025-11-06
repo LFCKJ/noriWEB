@@ -1,0 +1,55 @@
+/* GroupSidebar 전용 스타일 */
+.group-sidebar {
+    width: 56px;
+    background: #202225;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    overflow-y: auto;
+}
+
+.group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    align-items: center;
+}
+
+/* GroupSidebar는 GroupItem 컴포넌트의 스타일을 상속받음 */
+
+/* 구분선 */
+.group-separator {
+    width: 32px;
+    height: 2px;
+    background: #36393f;
+    border-radius: 1px;
+    margin: 8px 0;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .group-sidebar {
+        width: 48px;
+        padding: 6px 0;
+    }
+
+    .group-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .group-sidebar {
+        width: 44px;
+    }
+
+    .group-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+}
