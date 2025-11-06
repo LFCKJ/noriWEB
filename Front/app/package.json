@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.14.1",
     "caniuse-lite": "^1.0.30001753",
     "framer-motion": "^12.23.22",
+    "motion": "^12.23.24",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.3"
