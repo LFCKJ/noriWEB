@@ -1,0 +1,21 @@
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.nav-logo img {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.nav-menu button {
+    margin: 0 5px;
+}
+
+.nav-actions button + button {
+    margin-left: 10px;
+}
