@@ -1,13 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import App from '../App';
-import Main from '../pages/Main';
-import About from '../pages/About';
-import Contact from '../pages/Contact';
+import { Main, About, Contact, Test } from '../pages';
 import ProtectedRoute from './ProtectedRoute';
-import Dashboard from '../pages/Dashboard/Dashboard';
-import Test from '../pages/Test';
-import DashboardHome from '../pages/Dashboard/DashboardHome';
-import DashboardTest from '../pages/Dashboard/DashboardTest';
+import { Dashboard, DashboardHome, DashboardTest } from '../pages/Dashboard';
 
 export default function Router() {
     return (
