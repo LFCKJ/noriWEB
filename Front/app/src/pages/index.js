@@ -12,8 +12,11 @@ export { default as Contact } from './Contact'; // 연락처/문의 페이지
 export { default as Login } from './Login'; // 로그인 페이지
 export { default as Test } from './Test'; // 테스트/실험 페이지
 
-// Dashboard 페이지 (레거시 - 향후 Workspace로 전환 예정)
-export { Dashboard, DashboardHome, DashboardTest } from './Dashboard';
+// 작업 공간 프레임
+export { default as Frame } from './Frame'; // 사이드바 포함 레이아웃
 
-// Workspace 페이지 (신규 아키텍처)
-// export { WorkspaceList, WorkspaceHome, ProjectDetail } from './Workspace';
+// 개인 공간 페이지
+export { Personal } from './Personal';
+
+// 워크스페이스 페이지
+export { default as WorkspaceList } from './WorkspaceList'; // 워크스페이스 목록
