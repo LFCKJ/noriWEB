@@ -1,0 +1,183 @@
+/* Sidebar - 통합 사이드바 스타일 */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    border-right: 1px solid #e8ecf1;
+    width: 72px;
+    min-width: 72px;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: visible; /* active indicator가 잘리지 않도록 */
+    padding: 12px 0;
+    position: relative;
+}
+
+/* 공간 전환 영역 */
+.sidebar__space-switcher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 0;
+    margin-bottom: 8px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e8ecf1;
+}
+
+.sidebar__space-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar__space-button:hover {
+    background-color: #5865f2;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(88, 101, 242, 0.3);
+}
+
+.sidebar__space-button--active {
+    background-color: #5865f2;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(88, 101, 242, 0.3);
+}
+
+.sidebar__space-button--active:hover {
+    background-color: #4752c4;
+}
+
+.sidebar__space-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+/* 구분선 */
+.sidebar__divider {
+    height: 2px;
+    width: 32px;
+    background-color: #e3e5e8;
+    margin: 8px 0;
+}
+
+/* 메뉴 영역 */
+.sidebar__menu {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    padding-top: 4px;
+}
+
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 4px 0;
+}
+
+.sidebar__menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar__menu-item:hover {
+    background-color: #43b581;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(67, 181, 129, 0.3);
+}
+
+.sidebar__menu-item--active {
+    background-color: #43b581;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(67, 181, 129, 0.3);
+}
+
+.sidebar__menu-item--active::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    width: 4px;
+    height: 40px;
+    background-color: #23272a;
+    border-radius: 0 4px 4px 0;
+}
+
+.sidebar__menu-item--active:hover {
+    background-color: #3ca374;
+}
+
+.sidebar__menu-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+/* 정보 텍스트 */
+.sidebar__info {
+    padding: 12px;
+    text-align: center;
+}
+
+.sidebar__info-text {
+    font-size: 0.75rem;
+    color: #5c5e66;
+    line-height: 1.4;
+    margin: 0;
+    word-break: keep-all;
+}
+
+/* 포커스 스타일 (키보드 접근성) */
+.sidebar__space-button:focus-visible,
+.sidebar__menu-item:focus-visible {
+    outline: 2px solid var(--color-focus, #0066cc);
+    outline-offset: -2px;
+}
+
+/* 스크롤바 스타일 */
+.sidebar::-webkit-scrollbar,
+.sidebar__menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.sidebar__menu::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.sidebar__menu::-webkit-scrollbar-thumb {
+    background-color: #dee2e6;
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.sidebar__menu::-webkit-scrollbar-thumb:hover {
+    background-color: #adb5bd;
+}

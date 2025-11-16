@@ -7,11 +7,12 @@ import './Button.css';
  * 표준 HTML button 요소를 기반으로 하여 접근성과 확장성을 보장합니다.
  *
  * @param {Object} props - 컴포넌트 props
- * @param {string} props.variant - 버튼 스타일 ('default' | 'primary' | 'secondary' | 'danger' | 'ghost')
- * @param {string} props.size - 버튼 크기 ('small' | 'medium' | 'large')
+ * @param {string} props.variant - 버튼 스타일 ('default' | 'primary' | 'secondary' | 'danger' | 'ghost' | 'icon' | 'icon-active')
+ * @param {string} props.size - 버튼 크기 ('small' | 'medium' | 'large' | 'icon')
  * @param {Function} props.onClick - 클릭 이벤트 핸들러
  * @param {React.ReactNode} props.children - 버튼에 표시될 내용 (텍스트, 아이콘 등)
  * @param {boolean} props.disabled - 버튼 비활성화 여부
+ * @param {boolean} props.active - 활성화 상태 (icon 버튼용)
  * @param {string} props.className - 추가 CSS 클래스
  */
 const Button = ({
@@ -20,6 +21,7 @@ const Button = ({
     onClick,
     children,
     disabled = false,
+    active = false,
     className = '',
     ...props
 }) => {
@@ -32,8 +34,9 @@ const Button = ({
         const variantClass = `btn--${variant}`;
         const sizeClass = `btn--${size}`;
         const disabledClass = disabled ? 'btn--disabled' : '';
+        const activeClass = active ? 'btn--active' : '';
 
-        return [baseClass, variantClass, sizeClass, disabledClass, className]
+        return [baseClass, variantClass, sizeClass, disabledClass, activeClass, className]
             .filter(Boolean)
             .join(' ');
     };
@@ -46,11 +49,20 @@ const Button = ({
 };
 
 Button.propTypes = {
-    variant: PropTypes.oneOf(['default', 'primary', 'secondary', 'danger', 'ghost']),
-    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    variant: PropTypes.oneOf([
+        'default',
+        'primary',
+        'secondary',
+        'danger',
+        'ghost',
+        'icon',
+        'icon-active'
+    ]),
+    size: PropTypes.oneOf(['small', 'medium', 'large', 'icon']),
     onClick: PropTypes.func,
     children: PropTypes.node.isRequired,
     disabled: PropTypes.bool,
+    active: PropTypes.bool,
     className: PropTypes.string
 };
 
