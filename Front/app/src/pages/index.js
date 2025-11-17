@@ -9,7 +9,6 @@
 export { default as Main } from './Main'; // 메인 랜딩 페이지
 export { default as About } from './About'; // 서비스 소개 페이지
 export { default as Contact } from './Contact'; // 연락처/문의 페이지
-export { default as Login } from './Login'; // 로그인 페이지
 export { default as Test } from './Test'; // 테스트/실험 페이지
 
 // 작업 공간 프레임
