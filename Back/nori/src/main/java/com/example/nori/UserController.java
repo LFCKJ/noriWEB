@@ -6,9 +6,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class UserController {
-    @GetMapping("/USER")
-    public String getMethodName(@RequestParam(value = "param", required = false, defaultValue = "World") String param) {
-        return "HELLO, " + param + "! 서버 연결 성공";
+
+    @GetMapping("/")
+    public String home() {
+        return "Server OK";
     }
-    
 }
+
+
+
+
+
