@@ -25,14 +25,14 @@
 }
 
 .btn--primary {
-    background: #5865f2;
+    background: #5b8def;
     color: white;
-    border: 1px solid #5865f2;
+    border: 1px solid #5b8def;
 }
 
 .btn--primary:hover:not(.btn--disabled) {
-    background: #4752c4;
-    border-color: #4752c4;
+    background: #4a7fd8;
+    border-color: #4a7fd8;
 }
 
 .btn--secondary {
@@ -59,13 +59,52 @@
 
 .btn--ghost {
     background: transparent;
-    color: #5865f2;
+    color: #5b8def;
     border: 1px solid transparent;
 }
 
 .btn--ghost:hover:not(.btn--disabled) {
-    background: #f2f3f5;
-    color: #4752c4;
+    background: #f8f9fa;
+    color: #4a7fd8;
+}
+
+.btn--icon {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.btn--icon:hover:not(.btn--disabled) {
+    background: #5b8def;
+    color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(91, 141, 239, 0.25);
+}
+
+.btn--icon.btn--active {
+    background: #5b8def;
+    color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(91, 141, 239, 0.3);
+}
+
+.btn--icon.btn--active::before {
+    content: '';
+    position: absolute;
+    left: -16px; /* 사이드바 안쪽으로 조정 */
+    width: 4px;
+    height: 40px;
+    background-color: #5b8def;
+    border-radius: 0 4px 4px 0;
+}
+
+.btn--icon.btn--active:hover:not(.btn--disabled) {
+    background: #4a7fd8;
 }
 
 /* Sizes */
@@ -87,6 +126,14 @@
     min-height: 44px;
 }
 
+.btn--icon {
+    width: 48px;
+    height: 48px;
+    min-height: 48px;
+    padding: 0;
+    font-size: 24px;
+}
+
 /* Disabled state */
 .btn--disabled {
     opacity: 0.6;
@@ -96,6 +143,6 @@
 
 /* Focus state */
 .btn:focus {
-    outline: 2px solid #5865f2;
+    outline: 2px solid #5b8def;
     outline-offset: 2px;
 }
