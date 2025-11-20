@@ -1,4 +1,7 @@
 import { Dialog } from '../ui';
+import naver from '../../images/naver.png'
+import google from '../../images/google.png'
+import kakao from '../../images/kakao.png'
 
 export default function Login({ open, onClose }) {
     const handleSocialLogin = (provider) => {
@@ -10,7 +13,7 @@ export default function Login({ open, onClose }) {
     if (!open) return null;
 
     return (
-        <Dialog open={open} onClose={onClose} title="">
+        <Dialog open={open} onClose={onClose} title="" width={"245px"}>
             <div style={styles.modal}>
                 <h3 style={styles.title}>로그인</h3>
                 <hr style={styles.divider} />
@@ -19,31 +22,28 @@ export default function Login({ open, onClose }) {
                     {/* Kakao */}
                     <div style={styles.iconBox} onClick={() => handleSocialLogin('Kakao')}>
                         <img
-                            src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+                            src={kakao}
                             alt="Kakao"
                             style={styles.icon}
                         />
-                        <span style={styles.label}>Kakao</span>
                     </div>
 
                     {/* Naver */}
                     <div style={styles.iconBox} onClick={() => handleSocialLogin('Naver')}>
                         <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/2/2d/NAVER_Whale_Logo.png"
+                            src={naver}
                             alt="Naver"
                             style={styles.icon}
                         />
-                        <span style={styles.label}>Naver</span>
                     </div>
 
                     {/* Google */}
                     <div style={styles.iconBox} onClick={() => handleSocialLogin('Google')}>
                         <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/0/09/IOS_Google_icon.png"
+                            src={google}
                             alt="Google"
                             style={styles.icon}
                         />
-                        <span style={styles.label}>Google</span>
                     </div>
                 </div>
             </div>
@@ -53,9 +53,9 @@ export default function Login({ open, onClose }) {
 
 const styles = {
     modal: {
-        padding: '30px',
+        padding: '20px',
         textAlign: 'center',
-        minHeight: '300px',     // 모달 세로
+        minHeight: '250px',     // 모달 세로
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -68,8 +68,8 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        gap: '40px',
-        marginTop: '30px',
+        gap: '24px',
+        marginTop: '45px',
     },
 
     // 아이콘 + 텍스트 컨테이너
