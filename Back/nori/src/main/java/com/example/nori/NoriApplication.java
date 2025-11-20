@@ -1,3 +1,5 @@
+//서버 연결 및 연결 할 때 마다 데이터 넣기 
+
 package com.example.nori;
 
 import com.example.nori.entity.User;
