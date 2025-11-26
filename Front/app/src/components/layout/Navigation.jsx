@@ -34,6 +34,7 @@ export const Navigation = ({ user = null, onLogin, onLogout, onCreateAccount }) 
                     <Button onClick={() => navigate('/about')}>About</Button>
                     <Button onClick={() => navigate('/contact')}>Contact</Button>
                     <Button onClick={() => navigate('/test')}>Test</Button>
+                    <Button onClick={() => navigate('/personal')}>Personal</Button>
                 </div>
             </nav>
             <div className="nav-actions-container">
