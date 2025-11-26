@@ -5,9 +5,11 @@ import kakao from '../../images/kakao.png'
 
 export default function Login({ open, onClose }) {
     const handleSocialLogin = (provider) => {
-        alert(`${provider} 로그인으로 이동합니다.`);
+        const baseUrl = "/oauth2/authorization/";
+        const registrationId = provider.toLowerCase();
+       // alert(`${provider} 로그인으로 이동합니다.`);
         // 실제 로그인 시:
-        // window.location.href = `/auth/${provider}`
+         window.location.href = baseUrl + registrationId;
     };
 
     if (!open) return null;
