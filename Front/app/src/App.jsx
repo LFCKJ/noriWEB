@@ -12,7 +12,7 @@ export default function App() {
                 </nav>
             </header> */}
             <main>
-                <Outlet />
+                <Outlet /> 
             </main>
         </div>
     );
