@@ -1,4 +1,3 @@
-import { px } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 /**
@@ -15,22 +14,14 @@ export default function WorkspaceList() {
     // 사용자가 속한 워크스페이스 목록 (임시 데이터)
     // TODO: API로 실제 데이터 가져오기
     const workspaceList = [
-        { id: 'ws-1', name: '프론트엔드 팀', description: 'React 프로젝트', image: null, memberCount: 5 },
-        { id: 'ws-2', name: '백엔드 팀', description: 'Node.js API 개발', image: null, memberCount: 4 },
-        { id: 'ws-3', name: '디자인 팀', description: 'UI/UX 디자인', image: null, memberCount: 3 },
-        { id: 'ws-4', name: '프로젝트 관리', description: '전체 프로젝트 관리', image: null, memberCount: 8 }
+        { id: 'ws-1', name: '프론트엔드 팀', description: 'React 개발 팀', memberCount: 12 },
+        { id: 'ws-2', name: '백엔드 팀', description: 'Node.js 개발 팀', memberCount: 8 },
+        { id: 'ws-3', name: '디자인 팀', description: 'UI/UX 디자인 팀', memberCount: 5 },
+        { id: 'ws-4', name: '프로젝트 관리', description: 'PM 및 기획 팀', memberCount: 3 }
     ];
 
-    // 워크스페이스 핸들러
-    const handleWorkspaceSelect = workspaceId => {
-        navigate(`/workspace/${workspaceId}`);
-    };
-
-    // 새 워크스페이스 생성 핸들러
-    const handleCreateWorkspace = () => {
-        // TODO: 워크스페이스 생성 모달/페이지
-        console.log('새 워크스페이스 생성');
-    };
+    const handleWorkspaceSelect = workspaceId => navigate(`/workspace/${workspaceId}`);
+    const handleCreateWorkspace = () => console.log("새 워크스페이스 생성");
 
     return (
         <div style={styles.page}>
@@ -43,115 +34,140 @@ export default function WorkspaceList() {
                         style={styles.card}
                         onClick={() => handleWorkspaceSelect(ws.id)}
                     >
-                        <div style={styles.imageBox}>
-                            {ws.image || ws.name.charAt(0)}
+                        <div style={styles.iconCircle}>
+                            {ws.name.charAt(0)}
                         </div>
-                        <h3 style={styles.cardTitle}>{ws.name}</h3>
-                        <p style={styles.description}>{ws.description}</p>
-                        <span style={styles.member}>{ws.memberCount}명</span>
+
+                        <div style={styles.textBox}>
+                            <div style={styles.cardTitle}>{ws.name}</div>
+                            <div style={styles.description}>{ws.description}</div>
+                            <div style={styles.member}>멤버 {ws.memberCount}명</div>
+                        </div>
                     </div>
                 ))}
 
+                {/* 새 워크스페이스 */}
                 <div style={{ ...styles.card, ...styles.newCard }} onClick={handleCreateWorkspace}>
-                    <span style={styles.newPlus}>+</span>
-                    <p style={styles.newText}>새 워크스페이스</p>
+                    <div style={styles.plusCircle}>+</div>
+                    <div style={styles.newTextBox}>
+                        <div style={styles.newTitle}>새 워크스페이스 만들기</div>
+                        <div style={styles.newDescription}>새 워크스페이스를 생성합니다</div>
+                    </div>
                 </div>
             </div>
+
         </div>
     );
 }
 
 /* -----------------------------
-   스타일 객체
+   스타일 객체 
 ------------------------------ */
 const styles = {
     page: {
         padding: '30px'
     },
+
     title: {
-        marginBottom: '24px',
-        fontSize: '36px',
+        fontSize: '32px',
         fontWeight: 700,
+        marginBottom: '30px'
     },
 
-    // 그리드
     grid: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-        gap: '20px',
-        padding: '10px'
-    },
-
-    // 카드
-    card: {
-        background: '#fff',
-        borderRadius: '14px',
-        padding: '20px',
-        boxShadow: '0 3px 10px rgba(0,0,0,0.08)',
-        cursor: 'pointer',
-        transition: '0.15s ease',
         display: 'flex',
-        flexDirection: 'column',
+        flexWrap: 'wrap',
+        gap: '24px'
+    },
+
+    card: {
+        width: '260px',
+        height: '130px',
+        display: 'flex',
+        flexDirection: 'row',
         alignItems: 'center',
-        textAlign: 'center'
+        gap: '18px',
+        padding: '20px',
+        background: '#fff',
+        borderRadius: '16px',
+        border: '1px solid #e5e7eb',
+        cursor: 'pointer',
+        transition: '0.2s',
     },
 
-    // 카드 hover (JSX에서 별도로 적용 못해도 react로 가능)
     cardHover: {
-        transform: 'translateY(-4px)',
-        boxShadow: '0 5px 16px rgba(0,0,0,0.12)'
+        transform: 'translateY(-4px)'
     },
 
-    imageBox: {
-        width: '60px',
-        height: '60px',
-        borderRadius: '12px',
-        background: '#e8f0fe',
+    iconCircle: {
+        width: '48px',
+        height: '48px',
+        borderRadius: '50%',
+        background: '#3b82f6',
+        color: '#fff',
+        fontSize: '18px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: '26px',
-        marginBottom: '15px',
-        color: '#5a6fdf',
         fontWeight: 'bold'
     },
 
+    textBox: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+
     cardTitle: {
-        margin: '5px 0 8px',
         fontSize: '18px',
-        fontWeight: '600'
+        fontWeight: 700,
+        marginBottom: '4px'
     },
 
     description: {
         fontSize: '14px',
-        color: '#666',
-        margin: 0
+        color: '#6b7280',
+        marginBottom: '6px'
     },
 
     member: {
-        marginTop: '10px',
         fontSize: '14px',
-        fontWeight: '600',
-        color: '#333'
-    },
-    scrollArea: {
-        flex: 1,
-        overflowY: 'auto',
-        padding: '0 40px 40px 40px',
+        color: '#6366f1',
+        fontWeight: 600
     },
 
-    // 새 워크스페이스 카드
+    // 새 그룹 카드
     newCard: {
-        background: '#f5f7ff',
-        border: '2px dashed #9da9ff',
-        color: '#6370ff'
+        background: '#f0fdf4',
+        border: '2px dashed #86efac'
     },
-    newPlus: {
-        fontSize: '36px',
+
+    plusCircle: {
+        width: '48px',
+        height: '48px',
+        borderRadius: '50%',
+        background: '#22c55e',
+        color: '#fff',
+        fontSize: '28px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         fontWeight: 'bold'
     },
-    newText: {
-        marginTop: '10px',
-        fontSize: '14px'
+
+    newTextBox: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+
+    newTitle: {
+        fontSize: '18px',
+        fontWeight: 700,
+        color: '#16a34a',
+        marginBottom: '4px'
+    },
+
+    newDescription: {
+        fontSize: '14px',
+        color: '#4ade80'
     }
 };
