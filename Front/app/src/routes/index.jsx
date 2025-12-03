@@ -4,6 +4,7 @@ import { Main, About, Contact, Test, Frame } from '../pages';
 import ProtectedRoute from './ProtectedRoute';
 import { WorkspaceList, Personal } from '../pages';
 import { Workspace } from '../pages/Workspace';
+import Analytics from '../temp/analy/analytics';
 
 export default function Router() {
     return (
@@ -37,7 +38,7 @@ export default function Router() {
                     <Route index element={<Workspace />} />
                     <Route path="members" element={<div>멤버 관리</div>} />
                     <Route path="settings" element={<div>워크스페이스 설정</div>} />
-                    <Route path="analytics" element={<div>분석</div>} />
+                    <Route path="analytics" element={<Analytics/>} />
                 </Route>
             </Route>
         </Routes>
