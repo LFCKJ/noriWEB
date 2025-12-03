@@ -1,0 +1,24 @@
+/* 스크롤바 스타일링 */
+.scrollbar-visible::-webkit-scrollbar {
+    height: 12px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 6px;
+    margin: 0 8px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 6px;
+    border: 2px solid #f1f5f9;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb:active {
+    background: #64748b;
+}
