@@ -48,6 +48,11 @@ export default function Footer() {
                         <li className="footer-column-list-item" onClick={() => navigate('/test')}>
                             Test
                         </li>
+                        <li
+                            className="footer-column-list-item"
+                            onClick={() => navigate('/personal')}>
+                            Personal
+                        </li>
                     </ul>
                 </div>
                 <div className="footer-right-space"></div>
