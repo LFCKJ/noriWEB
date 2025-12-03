@@ -4,6 +4,7 @@ import { Main, About, Contact, Test, Frame } from '../pages';
 import ProtectedRoute from './ProtectedRoute';
 import { WorkspaceList, Personal } from '../pages';
 import { Workspace } from '../pages/Workspace';
+import TaskPage from '../temp/task/taskPage';
 
 export default function Router() {
     return (
@@ -31,6 +32,7 @@ export default function Router() {
 
                 {/* 워크스페이스 선택 */}
                 <Route path="spaces" element={<WorkspaceList />} />
+                <Route path="tasks" element={<TaskPage />} />
 
                 {/* 워크스페이스 상세 */}
                 <Route path="workspace/:workspaceId">
