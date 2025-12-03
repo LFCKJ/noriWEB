@@ -21,22 +21,20 @@ export default function WorkspaceList() {
     ];
 
     const handleWorkspaceSelect = workspaceId => navigate(`/workspace/${workspaceId}`);
-    const handleCreateWorkspace = () => console.log("새 워크스페이스 생성");
+    const handleCreateWorkspace = () => console.log('새 워크스페이스 생성');
 
     return (
         <div style={styles.page}>
             <h1 style={styles.title}>워크스페이스 선택</h1>
+            <p className="bg-red-500">테스트</p>
 
             <div style={styles.grid}>
                 {workspaceList.map(ws => (
                     <div
                         key={ws.id}
                         style={styles.card}
-                        onClick={() => handleWorkspaceSelect(ws.id)}
-                    >
-                        <div style={styles.iconCircle}>
-                            {ws.name.charAt(0)}
-                        </div>
+                        onClick={() => handleWorkspaceSelect(ws.id)}>
+                        <div style={styles.iconCircle}>{ws.name.charAt(0)}</div>
 
                         <div style={styles.textBox}>
                             <div style={styles.cardTitle}>{ws.name}</div>
@@ -55,7 +53,6 @@ export default function WorkspaceList() {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }
@@ -92,7 +89,7 @@ const styles = {
         borderRadius: '16px',
         border: '1px solid #e5e7eb',
         cursor: 'pointer',
-        transition: '0.2s',
+        transition: '0.2s'
     },
 
     cardHover: {
