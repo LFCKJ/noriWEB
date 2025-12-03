@@ -12,7 +12,7 @@ import {
     TimelineView
 } from './components';
 import { formatDateToDisplay } from './utils';
-import './taskPage.css';
+import './TaskPage.css';
 
 export default function TaskPage() {
     // 뷰 상태
