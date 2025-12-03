@@ -15,22 +15,15 @@ export default function TaskCard({ task, onDelete, onClick }) {
                 <div className="font-medium text-gray-900 mb-2 truncate" title={task.title}>
                     {task.title}
                 </div>
-                <div className="flex gap-2 overflow-hidden">
-                    {task.tags.slice(0, 3).map((tag, index) => (
+                <div className="flex gap-2 overflow-hidden flex-wrap">
+                    {task.tags.map((tag, index) => (
                         <span
                             key={index}
                             title={tag}
-                            className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded border border-gray-200 max-w-20 truncate inline-block whitespace-nowrap">
+                            className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded border border-gray-200 truncate max-w-full">
                             {tag}
                         </span>
                     ))}
-                    {task.tags.length > 3 && (
-                        <span
-                            className="px-2 py-1 text-gray-500 text-xs whitespace-nowrap"
-                            title={task.tags.slice(3).join(', ')}>
-                            +{task.tags.length - 3}
-                        </span>
-                    )}
                 </div>
             </div>
 

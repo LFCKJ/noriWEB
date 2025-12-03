@@ -73,7 +73,11 @@ export default function TaskDetailModal({ task, isOpen, onClose, onUpdate, onDel
                 {task.description && (
                     <div className="mb-6">
                         <label className="block text-sm font-medium text-gray-500 mb-2">설명</label>
-                        <p className="text-gray-700 whitespace-pre-wrap">{task.description}</p>
+                        <div className="max-h-40 overflow-y-auto border border-gray-200 rounded-lg p-3">
+                            <p className="text-gray-700 whitespace-pre-wrap break-all">
+                                {task.description}
+                            </p>
+                        </div>
                     </div>
                 )}
 
