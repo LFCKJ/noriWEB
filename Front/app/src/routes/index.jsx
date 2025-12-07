@@ -6,6 +6,7 @@ import { WorkspaceList, Personal } from '../pages';
 import { Workspace } from '../pages/Workspace';
 import TaskPage from '../temp/task/taskPage';
 import Analytics from '../temp/analy/analytics';
+import Kanbanpage from '../temp/temp-kanban/kanbanpage';
 
 export default function Router() {
   return (
@@ -22,13 +23,13 @@ export default function Router() {
       <Route element={<Frame />}>
         {/* 디버깅용 Frame 확인 */}
         <Route path="frame" element={<h1>Frame 레이아웃 테스트용 페이지</h1>} />
-
         {/* 개인 공간 */}
         <Route path="personal">
           <Route index element={<Personal />} />
           <Route path="projects" element={<div>내 프로젝트</div>} />
           <Route path="notes" element={<div>개인 노트</div>} />
           <Route path="settings" element={<div>개인 설정</div>} />
+          <Route path="kanban" element={<Kanbanpage />} />
         </Route>
 
         {/* 워크스페이스 선택 */}
