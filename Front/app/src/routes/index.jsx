@@ -38,7 +38,7 @@ export default function Router() {
                     <Route index element={<Workspace />} />
                     <Route path="members" element={<div>멤버 관리</div>} />
                     <Route path="settings" element={<div>워크스페이스 설정</div>} />
-                    <Route path="analytics" element={<Analytics/>} />
+                <Route path="analytics" element={<Analytics/>} />
                 </Route>
             </Route>
         </Routes>
