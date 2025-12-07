@@ -19,11 +19,6 @@ export default function Router() {
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="test" element={<Test />} />
-        {/* settings test  추가 한 부분 */}
-        <Route path="settings-test" element={<SettingsTest />} />
-
-        {/* 🔹 MyTasks 임시 테스트용 라우트 (settings-test처럼 루트에서 테스트) */}
-        <Route path="my-tasks-test" element={<MyTasksPage />} />
       </Route>
 
       {/* Frame을 통한 작업 공간 (사이드바 포함) */}
@@ -49,6 +44,10 @@ export default function Router() {
         </Route>
 
         {/* 테스트용 */}
+        {/* settings test  추가 한 부분 */}
+        <Route path="settings-test" element={<SettingsTest />} />
+        {/* 🔹 MyTasks 임시 테스트용 라우트 (settings-test처럼 루트에서 테스트) */}
+        <Route path="my-tasks-test" element={<MyTasksPage />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="tasks" element={<TaskPage />} />
         <Route path="kanban" element={<Kanbanpage />} />
