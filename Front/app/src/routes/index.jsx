@@ -5,43 +5,44 @@ import ProtectedRoute from './ProtectedRoute';
 import { WorkspaceList, Personal } from '../pages';
 import { Workspace } from '../pages/Workspace';
 import TaskPage from '../temp/task/taskPage';
+import Analytics from '../temp/analy/analytics';
 
 export default function Router() {
-    return (
-        <Routes>
-            {/* 공개 페이지 */}
-            <Route path="/" element={<App />}>
-                <Route index element={<Main />} />
-                <Route path="about" element={<About />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="test" element={<Test />} />
-            </Route>
+  return (
+    <Routes>
+      {/* 공개 페이지 */}
+      <Route path="/" element={<App />}>
+        <Route index element={<Main />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="test" element={<Test />} />
+      </Route>
 
-            {/* Frame을 통한 작업 공간 (사이드바 포함) */}
-            <Route element={<Frame />}>
-                {/* 디버깅용 Frame 확인 */}
-                <Route path="frame" element={<h1>Frame 레이아웃 테스트용 페이지</h1>} />
+      {/* Frame을 통한 작업 공간 (사이드바 포함) */}
+      <Route element={<Frame />}>
+        {/* 디버깅용 Frame 확인 */}
+        <Route path="frame" element={<h1>Frame 레이아웃 테스트용 페이지</h1>} />
 
-                {/* 개인 공간 */}
-                <Route path="personal">
-                    <Route index element={<Personal />} />
-                    <Route path="projects" element={<div>내 프로젝트</div>} />
-                    <Route path="notes" element={<div>개인 노트</div>} />
-                    <Route path="settings" element={<div>개인 설정</div>} />
-                </Route>
+        {/* 개인 공간 */}
+        <Route path="personal">
+          <Route index element={<Personal />} />
+          <Route path="projects" element={<div>내 프로젝트</div>} />
+          <Route path="notes" element={<div>개인 노트</div>} />
+          <Route path="settings" element={<div>개인 설정</div>} />
+        </Route>
 
-                {/* 워크스페이스 선택 */}
-                <Route path="spaces" element={<WorkspaceList />} />
-                <Route path="tasks" element={<TaskPage />} />
+        {/* 워크스페이스 선택 */}
+        <Route path="spaces" element={<WorkspaceList />} />
+        <Route path="tasks" element={<TaskPage />} />
 
-                {/* 워크스페이스 상세 */}
-                <Route path="workspace/:workspaceId">
-                    <Route index element={<Workspace />} />
-                    <Route path="members" element={<div>멤버 관리</div>} />
-                    <Route path="settings" element={<div>워크스페이스 설정</div>} />
-                    <Route path="analytics" element={<div>분석</div>} />
-                </Route>
-            </Route>
-        </Routes>
-    );
+        {/* 워크스페이스 상세 */}
+        <Route path="workspace/:workspaceId">
+          <Route index element={<Workspace />} />
+          <Route path="members" element={<div>멤버 관리</div>} />
+          <Route path="settings" element={<div>워크스페이스 설정</div>} />
+          <Route path="analytics" element={<Analytics />} />
+        </Route>
+      </Route>
+    </Routes>
+  );
 }
