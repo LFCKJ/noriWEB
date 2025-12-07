@@ -29,20 +29,22 @@ export default function Router() {
           <Route path="projects" element={<div>내 프로젝트</div>} />
           <Route path="notes" element={<div>개인 노트</div>} />
           <Route path="settings" element={<div>개인 설정</div>} />
-          <Route path="kanban" element={<Kanbanpage />} />
         </Route>
 
         {/* 워크스페이스 선택 */}
         <Route path="spaces" element={<WorkspaceList />} />
-        <Route path="tasks" element={<TaskPage />} />
 
         {/* 워크스페이스 상세 */}
         <Route path="workspace/:workspaceId">
           <Route index element={<Workspace />} />
           <Route path="members" element={<div>멤버 관리</div>} />
           <Route path="settings" element={<div>워크스페이스 설정</div>} />
-          <Route path="analytics" element={<Analytics />} />
         </Route>
+
+        {/* 테스트용 */}
+        <Route path="analytics" element={<Analytics />} />
+        <Route path="tasks" element={<TaskPage />} />
+        <Route path="kanban" element={<Kanbanpage />} />
       </Route>
     </Routes>
   );
