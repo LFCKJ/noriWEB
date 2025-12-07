@@ -4,6 +4,7 @@ import { Main, About, Contact, Test, Frame } from '../pages';
 import ProtectedRoute from './ProtectedRoute';
 import { WorkspaceList, Personal } from '../pages';
 import { Workspace } from '../pages/Workspace';
+import SharedDrive from '../temp/temp-shareddrive/shareddrive';
 
 export default function Router() {
     return (
@@ -27,6 +28,7 @@ export default function Router() {
                     <Route path="projects" element={<div>내 프로젝트</div>} />
                     <Route path="notes" element={<div>개인 노트</div>} />
                     <Route path="settings" element={<div>개인 설정</div>} />
+                    <Route path="shareddrive" element={<SharedDrive/>} />
                 </Route>
 
                 {/* 워크스페이스 선택 */}
