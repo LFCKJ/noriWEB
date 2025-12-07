@@ -9,6 +9,7 @@ import Analytics from '../temp/analy/analytics';
 import Kanbanpage from '../temp/temp-kanban/kanbanpage';
 import SettingsTest from '../temp/SettingsTest';
 import MyTasksPage from '../temp/MyTasksPage';
+import SharedDrive from '../temp/temp-shareddrive/shareddrive';
 
 export default function Router() {
   return (
@@ -51,6 +52,7 @@ export default function Router() {
         <Route path="analytics" element={<Analytics />} />
         <Route path="tasks" element={<TaskPage />} />
         <Route path="kanban" element={<Kanbanpage />} />
+        <Route path="shareddrive" element={<SharedDrive />} />
       </Route>
     </Routes>
   );
