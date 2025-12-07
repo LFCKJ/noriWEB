@@ -1,4 +1,4 @@
-// routes/kanbanpage.jsx (현재 파일에 덮어쓰기)
+// routes/kanbanpage.jsx
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTaskContext } from '../temp-kanban/context/TaskContext';
@@ -17,7 +17,7 @@ export default function Kanbanpage() {
   const [priorityFilter, setPriorityFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  // 검색 + 필터
+  // 검색 + 필터 (mockData의 한글 구조에 맞게 수정)
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
       const title = (task.title || '').toLowerCase();
@@ -25,10 +25,16 @@ export default function Kanbanpage() {
       const q = searchQuery.toLowerCase();
 
       const matchesSearch = title.includes(q) || desc.includes(q);
+
+      // assignee: 이제 객체가 아니라 문자열 (예: '정수진')
       const matchesAssignee =
-        assigneeFilter === 'all' || task.assignee?.id === assigneeFilter;
+        assigneeFilter === 'all' || task.assignee === assigneeFilter;
+
+      // priority: '낮음' | '보통' | '높음' | '긴급'
       const matchesPriority =
         priorityFilter === 'all' || task.priority === priorityFilter;
+
+      // status: '할 일' | '진행 중' | '검토' | '완료'
       const matchesStatus =
         statusFilter === 'all' || task.status === statusFilter;
 
@@ -41,34 +47,34 @@ export default function Kanbanpage() {
     });
   }, [tasks, searchQuery, assigneeFilter, priorityFilter, statusFilter]);
 
-  // 컬럼 정보 (헤더 색상)
+  // 컬럼 정보 (mockData의 한글 status에 맞춰 수정)
   const columns = [
-    { status: 'todo',        title: '할 일',   color: 'bg-slate-100' },
-    { status: 'in-progress', title: '진행 중', color: 'bg-blue-100' },
-    { status: 'review',      title: '검토',    color: 'bg-purple-100' },
-    { status: 'done',        title: '완료',    color: 'bg-green-100' },
+    { status: '할 일',   title: '할 일',   color: 'bg-slate-100' },
+    { status: '진행 중', title: '진행 중', color: 'bg-blue-100' },
+    { status: '검토',    title: '검토',    color: 'bg-purple-100' },
+    { status: '완료',    title: '완료',    color: 'bg-green-100' },
   ];
 
   const getTasksByStatus = (status) =>
     filteredTasks.filter((task) => task.status === status);
 
-  // 카드 왼쪽 컬러 바 (우선순위)
+  // 카드 왼쪽 컬러 바 (우선순위 - 한글 기준)
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'urgent':
+      case '긴급':
         return 'border-l-red-500';
-      case 'high':
+      case '높음':
         return 'border-l-orange-500';
-      case 'medium':
+      case '보통':
         return 'border-l-yellow-500';
-      case 'low':
+      case '낮음':
         return 'border-l-green-500';
       default:
         return 'border-l-slate-300';
     }
   };
 
-  // 드래그 앤 드롭
+  // 드래그 앤 드랍
   const handleDragStart = (e, taskId) => {
     e.dataTransfer.setData('taskId', String(taskId));
   };
@@ -82,7 +88,7 @@ export default function Kanbanpage() {
     const taskId = e.dataTransfer.getData('taskId');
     if (!taskId) return;
 
-    // TaskContext에서 쓰는 시그니처에 맞게 (id, partial) 형식 유지
+    // status도 한글 값으로 들어감 (예: '진행 중', '완료' 등)
     updateTask(taskId, { status: newStatus });
   };
 
@@ -105,10 +111,11 @@ export default function Kanbanpage() {
           onPriorityFilterChange={setPriorityFilter}
           statusFilter={statusFilter}
           onStatusFilterChange={setStatusFilter}
+          tasks={tasks}
         />
       </div>
 
-            {/* 컬럼들 */}
+      {/* 컬럼들 */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {columns.map((column) => {
           const columnTasks = getTasksByStatus(column.status);
@@ -149,7 +156,9 @@ export default function Kanbanpage() {
                     )}
                   >
                     {/* 제목 */}
-                    <h4 className="mb-2 text-sm font-semibold">{task.title}</h4>
+                    <h4 className="mb-2 text-sm font-semibold">
+                      {task.title}
+                    </h4>
 
                     {/* 태그 배지들 */}
                     {task.tags && task.tags.length > 0 && (
@@ -168,33 +177,14 @@ export default function Kanbanpage() {
 
                     {/* 담당자 + 마감일 */}
                     <div className="mt-1 flex items-center justify-between text-xs text-slate-500">
-                      <span>{task.assignee?.name ?? '미할당'}</span>
-                      {task.dueDate && (
-                        <span
-                          className={
-                            new Date(task.dueDate) < new Date() &&
-                            task.status !== 'done'
-                              ? 'text-red-500'
-                              : 'text-slate-500'
-                          }
-                        >
-                          {new Date(task.dueDate).toLocaleDateString('ko-KR', {
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                        </span>
-                      )}
+                      {/* assignee: 문자열로 바로 표시 */}
+                      <span>{task.assignee || '미할당'}</span>
+                      {/* dueDate: 문자열 그대로 표시 (예: '2025. 11. 28.') */}
+                      {task.dueDate && <span>{task.dueDate}</span>}
                     </div>
 
-                    {/* 서브태스크 진행률 */}
-                    {task.subTasks && task.subTasks.length > 0 && (
-                      <div className="mt-1 text-[11px] text-slate-400">
-                        {
-                          task.subTasks.filter((sub) => sub.completed).length
-                        }
-                        /{task.subTasks.length} 완료
-                      </div>
-                    )}
+                    {/* 예전 subTasks, 날짜 포맷/기한초과 표시 등은
+                        mockData 구조에 없으므로 제거했음 */}
                   </Card>
                 ))}
               </div>
@@ -204,5 +194,4 @@ export default function Kanbanpage() {
       </div>
     </div>
   );
-} 
-
+}
