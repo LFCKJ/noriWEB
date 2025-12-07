@@ -4,6 +4,8 @@ import { Main, About, Contact, Test, Frame } from '../pages';
 import ProtectedRoute from './ProtectedRoute';
 import { WorkspaceList, Personal } from '../pages';
 import { Workspace } from '../pages/Workspace';
+import SettingsTest from '../temp/SettingsTest';
+import MyTasksPage from '../temp/MyTasksPage';
 
 export default function Router() {
     return (
@@ -14,6 +16,11 @@ export default function Router() {
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="test" element={<Test />} />
+                {/* settings test  추가 한 부분 */}
+                <Route path="settings-test" element={<SettingsTest />} /> 
+
+                {/* 🔹 MyTasks 임시 테스트용 라우트 (settings-test처럼 루트에서 테스트) */}
+                <Route path="my-tasks-test" element={<MyTasksPage />} />
             </Route>
 
             {/* Frame을 통한 작업 공간 (사이드바 포함) */}
