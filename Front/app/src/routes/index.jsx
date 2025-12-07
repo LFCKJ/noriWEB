@@ -7,8 +7,8 @@ import { Workspace } from '../pages/Workspace';
 import TaskPage from '../temp/task/taskPage';
 import Analytics from '../temp/analy/analytics';
 import Kanbanpage from '../temp/temp-kanban/kanbanpage';
-import SettingsTest from '../temp/SettingsTest';
-import MyTasksPage from '../temp/MyTasksPage';
+import SettingsTest from '../temp/settings/SettingsTest';
+import MyTasksPage from '../temp/my-tasks/MyTasksPage';
 import SharedDrive from '../temp/temp-shareddrive/shareddrive';
 
 export default function Router() {
