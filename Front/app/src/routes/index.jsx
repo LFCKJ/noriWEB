@@ -10,6 +10,8 @@ import Kanbanpage from '../temp/temp-kanban/kanbanpage';
 import SettingsTest from '../temp/settings/SettingsTest';
 import MyTasksPage from '../temp/my-tasks/MyTasksPage';
 import SharedDrive from '../temp/temp-shareddrive/shareddrive';
+import TempControl from '../temp/tempControl';
+import TempControlTest from '../temp/test';
 
 export default function Router() {
   return (
@@ -45,14 +47,18 @@ export default function Router() {
         </Route>
 
         {/* 테스트용 */}
-        {/* settings test  추가 한 부분 */}
-        <Route path="settings-test" element={<SettingsTest />} />
-        {/* 🔹 MyTasks 임시 테스트용 라우트 (settings-test처럼 루트에서 테스트) */}
-        <Route path="my-tasks-test" element={<MyTasksPage />} />
-        <Route path="analytics" element={<Analytics />} />
-        <Route path="tasks" element={<TaskPage />} />
-        <Route path="kanban" element={<Kanbanpage />} />
-        <Route path="shareddrive" element={<SharedDrive />} />
+        <Route path="temp" element={<TempControl />}>
+          {/* 데이터 확인용 test */}
+          <Route path="test" element={<TempControlTest />} />
+          {/* settings test  추가 한 부분 */}
+          <Route path="settings-test" element={<SettingsTest />} />
+          {/* 🔹 MyTasks 임시 테스트용 라우트 (settings-test처럼 루트에서 테스트) */}
+          <Route path="my-tasks-test" element={<MyTasksPage />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="tasks" element={<TaskPage />} />
+          <Route path="kanban" element={<Kanbanpage />} />
+          <Route path="shareddrive" element={<SharedDrive />} />
+        </Route>
       </Route>
     </Routes>
   );
