@@ -31,6 +31,18 @@ const isSameDay = (a, b) =>
  * - 현재 워크스페이스에서 "나에게 배정된" Task를 모아서 보는 화면
  * - 뷰 모드 선택: 리스트 / 테이블 / 캘린더 / 칸반
  * - 상단 요약 + 시간 / 상태 / 우선순위 / 프로젝트 / 태그 필터 + 검색
+ *
+ * 서버 데이터 스펙:
+ *   id: string | number  → key에서 String(id)로 사용
+ *   title: string
+ *   description: string
+ *   tags: string[]
+ *   status: string
+ *   priority: string
+ *   type: string
+ *   assignee: string
+ *   dueDate: 'yyyy-MM-dd'
+ *   project: string
  */
 
 // 서버에서 받아온다고 가정하는 Task 리스트 (현재는 하드코딩)
@@ -42,21 +54,21 @@ const MOCK_TASKS = [
     status: 'todo', // 할 일
     priority: 'high', // 우선순위
     type: '기능',
-    assigneeName: '나',
+    assignee: '나',
     dueDate: '2025-12-10', // 마감일
-    projectName: '캡스톤 메인 프로젝트',
+    project: '캡스톤 메인 프로젝트',
     tags: ['기획', 'v1.0']
   },
   {
-    id: 'TASK-002',
+    id: 2,
     title: '워크스페이스 멤버 초대 플로우',
     description: '초대 모달 UX 개선 및 에러 상태 정의',
     status: 'doing', // 진행 중
     priority: 'medium',
     type: '기능',
-    assigneeName: '나',
+    assignee: '나',
     dueDate: '2025-12-07',
-    projectName: '팀 온보딩',
+    project: '팀 온보딩',
     tags: ['UX', '프론트엔드']
   },
   {
@@ -66,21 +78,21 @@ const MOCK_TASKS = [
     status: 'doing',
     priority: 'low',
     type: '버그',
-    assigneeName: '나',
+    assignee: '나',
     dueDate: '2025-12-08',
-    projectName: 'UI 라이브러리',
+    project: 'UI 라이브러리',
     tags: ['버그', 'UI']
   },
   {
-    id: 'TASK-004',
+    id: 4,
     title: '알림 설정 API 연동',
     description: '백엔드 스펙 문서 확인 후 연동',
     status: 'done', // 완료
     priority: 'medium',
     type: '기능',
-    assigneeName: '나',
+    assignee: '나',
     dueDate: '2025-12-01',
-    projectName: '알림 시스템',
+    project: '알림 시스템',
     tags: ['백엔드', 'API']
   }
 ];
@@ -91,6 +103,7 @@ const MOCK_TASKS = [
  */
 export default function MyTasksPage({ workspaceName = '팀 워크스페이스' }) {
   // 실제 Task 데이터 상태 (지금은 고정 MOCK_TASKS 사용)
+  // id가 number로 들어온 것도 있을 수 있어서 그대로 두고, 사용할 때 String(...)으로 처리
   const [tasks] = useState(MOCK_TASKS);
 
   // 여러 가지 필터 상태들
@@ -110,10 +123,10 @@ export default function MyTasksPage({ workspaceName = '팀 워크스페이스' }
      프로젝트 / 태그 옵션: 셀렉트 박스에서 쓸 목록 만들기
      ───────────────────────────────────────────────────────────── */
 
-  // tasks 안에 있는 projectName들을 모아서 "중복 제거된 배열" 만들기
+  // tasks 안에 있는 project들을 모아서 "중복 제거된 배열" 만들기
   const projectOptions = useMemo(() => {
     const set = new Set();
-    tasks.forEach(t => t.projectName && set.add(t.projectName));
+    tasks.forEach(t => t.project && set.add(t.project));
     return Array.from(set);
   }, [tasks]);
 
@@ -159,7 +172,7 @@ export default function MyTasksPage({ workspaceName = '팀 워크스페이스' }
           if (priorityFilter !== 'all' && task.priority !== priorityFilter) return false;
 
           // 프로젝트 필터
-          if (projectFilter !== 'all' && task.projectName !== projectFilter) return false;
+          if (projectFilter !== 'all' && task.project !== projectFilter) return false;
 
           // 태그 필터
           if (tagFilter !== 'all') {
@@ -171,7 +184,7 @@ export default function MyTasksPage({ workspaceName = '팀 워크스페이스' }
           if (search.trim()) {
             const keyword = search.toLowerCase();
             const titleMatch = task.title?.toLowerCase().includes(keyword);
-            const projectMatch = task.projectName?.toLowerCase().includes(keyword);
+            const projectMatch = task.project?.toLowerCase().includes(keyword);
             const tagMatch = (task.tags || []).join(' ').toLowerCase().includes(keyword);
             return titleMatch || projectMatch || tagMatch;
           }
@@ -654,7 +667,7 @@ function TaskGroup({ title, description, tasks, tone = 'neutral' }) {
       </header>
       <ul className="overflow-hidden rounded-xl border border-slate-100 bg-slate-50/60">
         {tasks.map(task => (
-          <TaskRow key={task.id} task={task} />
+          <TaskRow key={String(task.id)} task={task} />
         ))}
       </ul>
     </section>
@@ -749,10 +762,10 @@ function TaskRow({ task }) {
 
         <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
           {/* 프로젝트 이름 뱃지 */}
-          {task.projectName && (
+          {task.project && (
             <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5">
               <span className="text-[10px]">📁</span>
-              <span className="truncate max-w-[140px]">{task.projectName}</span>
+              <span className="truncate max-w-[140px]">{task.project}</span>
             </span>
           )}
 
@@ -833,7 +846,7 @@ function TaskTableView({ tasks }) {
               const statusLabel = statusLabelMap[task.status] || '기타';
 
               return (
-                <tr key={task.id} className="hover:bg-slate-50/70 transition-colors">
+                <tr key={String(task.id)} className="hover:bg-slate-50/70 transition-colors">
                   {/* 체크박스 칼럼 */}
                   <td className="px-3 py-2 align-middle">
                     <input
@@ -856,7 +869,7 @@ function TaskTableView({ tasks }) {
 
                   {/* 프로젝트 이름 */}
                   <td className="px-3 py-2 align-middle">
-                    <span className="text-[11px] text-slate-600">{task.projectName || '-'}</span>
+                    <span className="text-[11px] text-slate-600">{task.project || '-'}</span>
                   </td>
 
                   {/* 상태 뱃지 */}
@@ -971,7 +984,7 @@ function TaskCalendarView({ tasks }) {
                 {/* 해당 날짜에 속한 Task들을 한 줄짜리 카드(TaskRow)로 렌더링 */}
                 <ul className="divide-y divide-slate-100 rounded-lg border border-slate-100 bg-white">
                   {g.tasks.map(task => (
-                    <TaskRow key={task.id} task={task} />
+                    <TaskRow key={String(task.id)} task={task} />
                   ))}
                 </ul>
               </section>
@@ -987,7 +1000,7 @@ function TaskCalendarView({ tasks }) {
               </header>
               <ul className="divide-y divide-slate-100 rounded-lg border border-slate-100 bg-white">
                 {noDue.map(task => (
-                  <TaskRow key={task.id} task={task} />
+                  <TaskRow key={String(task.id)} task={task} />
                 ))}
               </ul>
             </section>
@@ -1085,7 +1098,7 @@ function KanbanColumn({ title, description, tone, tasks }) {
       ) : (
         <ul className="flex flex-1 flex-col gap-3 overflow-y-auto pb-1">
           {tasks.map(task => (
-            <KanbanCard key={task.id} task={task} />
+            <KanbanCard key={String(task.id)} task={task} />
           ))}
         </ul>
       )}
@@ -1146,10 +1159,10 @@ function KanbanCard({ task }) {
 
       {/* 중간: 프로젝트 / 타입 / 담당자 */}
       <div className="mb-2 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
-        {task.projectName && (
+        {task.project && (
           <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5">
             <span className="text-[10px]">📁</span>
-            <span className="truncate max-w-[120px]">{task.projectName}</span>
+            <span className="truncate max-w-[120px]">{task.project}</span>
           </span>
         )}
         {task.type && (
@@ -1158,12 +1171,12 @@ function KanbanCard({ task }) {
             <span>{task.type}</span>
           </span>
         )}
-        {task.assigneeName && (
+        {task.assignee && (
           <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2 py-0.5">
             <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-slate-900 text-[9px] font-medium text-white">
-              {task.assigneeName[0]}
+              {task.assignee[0]}
             </span>
-            <span>{task.assigneeName}</span>
+            <span>{task.assignee}</span>
           </span>
         )}
       </div>
