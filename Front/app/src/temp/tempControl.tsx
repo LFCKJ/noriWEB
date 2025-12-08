@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import TaskData from './data/tasksData.json';
+import { useState } from 'react';
 
 export default function TempControl() {
-  console.log(TaskData);
+  const [tasks, setTasks] = useState(TaskData);
   return (
     <>
-      <Outlet context={TaskData} />
+      <Outlet context={[tasks, setTasks]} />
     </>
   );
 }
