@@ -1,0 +1,230 @@
+.analytics-dashboard {
+  padding: 20px;
+  background-color: #f4f7f9;
+}
+
+.analytics-dashboard h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.analytics-dashboard .subtitle {
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+/* 1. 요약 카드 스타일 */
+.summary-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-title {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #343a40;
+}
+
+/* 2. 차트 섹션 스타일 */
+.chart-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.chart-panel {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-panel h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* 차트 플레이스홀더 및 시각화 */
+.chart-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px; /* 차트 높이 설정 */
+}
+
+/* 파이 차트 영역 */
+.pie-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-right: 15px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+/* 막대 차트 영역 */
+.bar-chart-container {
+  display: flex;
+  height: 250px;
+  padding-left: 30px; /* y축 여백 */
+  position: relative;
+}
+
+.y-axis-labels {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #6c757d;
+  padding: 5px 0;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  justify-content: space-around;
+}
+
+.bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.bar {
+  width: 30px;
+  background-color: #4F46E5;
+  border-radius: 4px 4px 0 0;
+}
+
+.bar-label {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #343a40;
+}
+
+/* 리스트 섹션 */
+.list-panel {
+  min-height: 200px;
+}
+
+.list-item {
+  padding: 5px 0;
+  border-bottom: 1px dotted #eee;
+  font-size: 0.9rem;
+}
+/* 프로젝트별 진행률 리스트 스타일 */
+.full-width-panel {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.progress-bar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 10px;
+}
+
+.project-progress-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.project-name {
+    width: 150px; /* 프로젝트 이름 너비 고정 */
+    font-weight: 500;
+}
+
+.progress-bar-wrapper {
+    flex-grow: 1; /* 남은 공간 차지 */
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #4F46E5; /* 진행률 채우는 색상 */
+    transition: width 0.5s ease-in-out;
+}
+
+.progress-percent {
+    width: 50px; /* 백분율 텍스트 너비 고정 */
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+/* 파이 차트 범례 스타일 */
+.pie-chart-wrapper {
+  /* Recharts 차트를 중앙에 배치하거나 flex 설정을 위해 필요합니다. */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-legend-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  /* 글자 색상 및 정렬 */
+}
+
+.legend-color-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 8px;
+  display: inline-block;
+  /* 색상을 Recharts Cell fill 속성에서 가져옵니다. */
+}
+
+.legend-name {
+  color: #343a40; /* 텍스트 색상 */
+}
