@@ -1,200 +1,148 @@
-// routes/kanbanpage.jsx (현재 파일에 덮어쓰기)
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTaskContext } from '../temp-kanban/context/TaskContext';
-import CreateTaskDialog from '../temp-kanban/CreateTaskDialog';
+import { useOutletContext } from 'react-router-dom';
+import CreateTaskDialog from './CreateTaskDialog';
 import TaskFilters from './TaskFilters';
 import { Badge } from './ui/badge';
 import { Card } from './ui/card';
-import { cn } from '../temp-kanban/lib/utils';
 
 export default function Kanbanpage() {
-  const { tasks, updateTask } = useTaskContext();
-  const navigate = useNavigate();
+  // TempControl에서 내려준 데이터 받기
+  const [tasks, setTasks] = useOutletContext();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [assigneeFilter, setAssigneeFilter] = useState('all');
-  const [priorityFilter, setPriorityFilter] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [assigneeFilter, setAssigneeFilter] = useState('전체');
+  const [priorityFilter, setPriorityFilter] = useState('전체');
+  const [statusFilter, setStatusFilter] = useState('전체');
 
-  // 검색 + 필터
+  // 🔹 드래그 중인 카드 id
+  const [draggingTaskId, setDraggingTaskId] = useState(null);
+
   const filteredTasks = useMemo(() => {
-    return tasks.filter((task) => {
-      const title = (task.title || '').toLowerCase();
-      const desc = (task.description || '').toLowerCase();
-      const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase();
+
+    return tasks.filter((t) => {
+      const title = (t.title || '').toLowerCase();
+      const desc = (t.description || '').toLowerCase();
 
       const matchesSearch = title.includes(q) || desc.includes(q);
       const matchesAssignee =
-        assigneeFilter === 'all' || task.assignee?.id === assigneeFilter;
+        assigneeFilter === '전체' || t.assignee === assigneeFilter;
       const matchesPriority =
-        priorityFilter === 'all' || task.priority === priorityFilter;
+        priorityFilter === '전체' || t.priority === priorityFilter;
       const matchesStatus =
-        statusFilter === 'all' || task.status === statusFilter;
+        statusFilter === '전체' || t.status === statusFilter;
 
       return (
-        matchesSearch &&
-        matchesAssignee &&
-        matchesPriority &&
-        matchesStatus
+        matchesSearch && matchesAssignee && matchesPriority && matchesStatus
       );
     });
   }, [tasks, searchQuery, assigneeFilter, priorityFilter, statusFilter]);
 
-  // 컬럼 정보 (헤더 색상)
   const columns = [
-    { status: 'todo',        title: '할 일',   color: 'bg-slate-100' },
-    { status: 'in-progress', title: '진행 중', color: 'bg-blue-100' },
-    { status: 'review',      title: '검토',    color: 'bg-purple-100' },
-    { status: 'done',        title: '완료',    color: 'bg-green-100' },
+    { status: '할 일', color: 'bg-slate-100' },
+    { status: '진행 중', color: 'bg-blue-100' },
+    { status: '검토', color: 'bg-purple-100' },
+    { status: '완료', color: 'bg-green-100' },
+    { status: '대기 중', color: 'bg-yellow-100' },
   ];
 
-  const getTasksByStatus = (status) =>
-    filteredTasks.filter((task) => task.status === status);
-
-  // 카드 왼쪽 컬러 바 (우선순위)
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'urgent':
+      case '긴급':
         return 'border-l-red-500';
-      case 'high':
+      case '높음':
         return 'border-l-orange-500';
-      case 'medium':
+      case '보통':
         return 'border-l-yellow-500';
-      case 'low':
+      case '낮음':
         return 'border-l-green-500';
       default:
         return 'border-l-slate-300';
     }
   };
 
-  // 드래그 앤 드롭
-  const handleDragStart = (e, taskId) => {
-    e.dataTransfer.setData('taskId', String(taskId));
+  // 🔹 드래그 시작
+  const handleDragStart = (taskId) => {
+    setDraggingTaskId(taskId);
   };
 
+  // 🔹 드랍 영역 위에 있을 때 기본 동작 막기
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  const handleDrop = (e, newStatus) => {
-    e.preventDefault();
-    const taskId = e.dataTransfer.getData('taskId');
-    if (!taskId) return;
+  // 🔹 드랍 시 컬럼 상태 변경
+  const handleDrop = (newStatus) => {
+    if (!draggingTaskId) return;
 
-    // TaskContext에서 쓰는 시그니처에 맞게 (id, partial) 형식 유지
-    updateTask(taskId, { status: newStatus });
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === draggingTaskId ? { ...task, status: newStatus } : task
+      )
+    );
+
+    setDraggingTaskId(null);
   };
 
   return (
-    <div className="w-full h-full px-6 py-8 bg-slate-50">
-      {/* 상단 타이틀 + 새 Task 버튼 */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold">칸반 보드</h1>
-        <CreateTaskDialog />
+    <div className="p-6">
+      <div className="flex justify-between mb-6">
+        <h1 className="text-2xl font-bold">📋 칸반 보드</h1>
+        <CreateTaskDialog tasks={tasks} setTasks={setTasks} />
       </div>
 
-      {/* 검색/필터 영역 */}
-      <div className="mb-6">
-        <TaskFilters
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          assigneeFilter={assigneeFilter}
-          onAssigneeFilterChange={setAssigneeFilter}
-          priorityFilter={priorityFilter}
-          onPriorityFilterChange={setPriorityFilter}
-          statusFilter={statusFilter}
-          onStatusFilterChange={setStatusFilter}
-        />
-      </div>
+      <TaskFilters
+        tasks={tasks} // 🔹 필터에서 담당자 목록 만들 때 사용
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        assigneeFilter={assigneeFilter}
+        onAssigneeFilterChange={setAssigneeFilter}
+        priorityFilter={priorityFilter}
+        onPriorityFilterChange={setPriorityFilter}
+        statusFilter={statusFilter}
+        onStatusFilterChange={setStatusFilter}
+      />
 
-            {/* 컬럼들 */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {columns.map((column) => {
-          const columnTasks = getTasksByStatus(column.status);
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4 mt-6">
+        {columns.map((col) => {
+          const columnTasks = filteredTasks.filter(
+            (t) => t.status === col.status
+          );
 
           return (
-            <div key={column.status} className="flex flex-col">
-              {/* 컬럼 헤더 */}
+            <div key={col.status}>
               <div
-                className={cn(
-                  'rounded-t-2xl px-4 py-3 mb-2 flex items-center justify-between text-sm font-semibold shadow-sm',
-                  column.color
-                )}
+                className={`rounded-t-lg px-4 py-2 font-semibold text-sm flex justify-between items-center ${col.color}`}
               >
-                <span>{column.title}</span>
-                <Badge
-                  variant="secondary"
-                  className="text-[11px] px-2 py-0.5"
-                >
-                  {columnTasks.length}
-                </Badge>
+                <span>{col.status}</span>
+                <Badge variant="secondary">{columnTasks.length}</Badge>
               </div>
 
-              {/* 드롭 영역 */}
+              {/* 🔹 이 영역이 드랍 존 */}
               <div
+                className="bg-gray-50 rounded-b-lg p-4 min-h-[400px] space-y-3"
                 onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, column.status)}
-                className="flex-1 min-h-[520px] bg-slate-100/80 rounded-b-2xl p-4 space-y-4"
+                onDrop={() => handleDrop(col.status)}
               >
                 {columnTasks.map((task) => (
                   <Card
                     key={task.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, task.id)}
-                    onClick={() => navigate(`/task/${task.id}`)}
-                    className={cn(
-                      'w-full p-4 cursor-pointer bg-white rounded-2xl border border-slate-200 border-l-4 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all',
-                      getPriorityColor(task.priority)
-                    )}
+                    className={`p-4 border-l-4 ${getPriorityColor(
+                      task.priority
+                    )}`}
+                    draggable // 🔹 카드 드래그 가능
+                    onDragStart={() => handleDragStart(task.id)}
                   >
-                    {/* 제목 */}
-                    <h4 className="mb-2 text-sm font-semibold">{task.title}</h4>
-
-                    {/* 태그 배지들 */}
-                    {task.tags && task.tags.length > 0 && (
-                      <div className="mb-2 flex flex-wrap gap-2">
-                        {task.tags.map((tag) => (
-                          <Badge
-                            key={tag}
-                            variant="outline"
-                            className="text-[11px] px-2 py-0.5"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* 담당자 + 마감일 */}
-                    <div className="mt-1 flex items-center justify-between text-xs text-slate-500">
-                      <span>{task.assignee?.name ?? '미할당'}</span>
-                      {task.dueDate && (
-                        <span
-                          className={
-                            new Date(task.dueDate) < new Date() &&
-                            task.status !== 'done'
-                              ? 'text-red-500'
-                              : 'text-slate-500'
-                          }
-                        >
-                          {new Date(task.dueDate).toLocaleDateString('ko-KR', {
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                        </span>
-                      )}
+                    <h3 className="font-semibold text-sm mb-1">
+                      {task.title}
+                    </h3>
+                    <p className="text-xs text-gray-500 mb-2">
+                      {task.description}
+                    </p>
+                    <div className="flex justify-between text-xs text-gray-500">
+                      <span>{task.assignee || '미지정'}</span>
+                      <span>{task.dueDate}</span>
                     </div>
-
-                    {/* 서브태스크 진행률 */}
-                    {task.subTasks && task.subTasks.length > 0 && (
-                      <div className="mt-1 text-[11px] text-slate-400">
-                        {
-                          task.subTasks.filter((sub) => sub.completed).length
-                        }
-                        /{task.subTasks.length} 완료
-                      </div>
-                    )}
                   </Card>
                 ))}
               </div>
@@ -204,5 +152,4 @@ export default function Kanbanpage() {
       </div>
     </div>
   );
-} 
-
+}

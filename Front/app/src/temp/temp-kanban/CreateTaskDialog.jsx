@@ -1,11 +1,9 @@
-// CreateTaskDialog.jsx
+// src/components/CreateTaskDialog.jsx
 import React, { useState } from 'react';
-import { useTaskContext } from '../temp-kanban/context/TaskContext';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import Button from '../../components/ui/Button';
-import { Dialog } from '../../components/ui/Dialog';
-import { mockUsers } from '../temp-kanban/utils/mockData';
+import { Dialog } from '../../components/ui/dialog';
 
 const Textarea = (props) => (
   <textarea
@@ -14,16 +12,17 @@ const Textarea = (props) => (
   />
 );
 
-const CreateTaskDialog = () => {
-  const { addTask } = useTaskContext();
+export default function CreateTaskDialog({ tasks, setTasks }) {
   const [open, setOpen] = useState(false);
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    priority: 'medium',
-    type: 'feature',
+    priority: '보통',   // '낮음' | '보통' | '높음' | '긴급'
+    status: '할 일',    // '할 일' | '진행 중' | '검토' | '완료'
+    type: '기능',       // '기능' | '버그' | '개선' | '문서'
+    assignee: '',
     dueDate: '',
-    assigneeId: '',
     project: '',
     tags: '',
   });
@@ -31,39 +30,39 @@ const CreateTaskDialog = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // id는 기존과 동일하게 문자열 사용
+    const newId =
+      (Math.max(...tasks.map((t) => Number(t.id || 0)), 0) + 1).toString();
+
     const newTask = {
-      id: Date.now().toString(),
+      id: newId,
       title: formData.title,
       description: formData.description,
-      priority: formData.priority,
-      status: 'todo',
-      type: formData.type,
-      dueDate: formData.dueDate ? new Date(formData.dueDate) : null,
-      assignee: formData.assigneeId
-        ? mockUsers.find((u) => u.id === formData.assigneeId)
-        : null,
-      coAssignees: [],
       tags: formData.tags
         .split(',')
         .map((t) => t.trim())
         .filter(Boolean),
+      status: formData.status,
+      priority: formData.priority,
+      type: formData.type,
+      assignee: formData.assignee,
+      // 날짜는 문자열로 그대로 저장
+      dueDate: formData.dueDate,
       project: formData.project,
-      subTasks: [],
-      attachments: [],
-      customFields: {},
-      createdAt: new Date(),
-      updatedAt: new Date(),
     };
 
-    addTask(newTask);
+    // TempControl에서 내려준 setTasks 사용
+    setTasks((prev) => [...prev, newTask]);
+
     setOpen(false);
     setFormData({
       title: '',
       description: '',
-      priority: 'medium',
-      type: 'feature',
+      priority: '보통',
+      status: '할 일',
+      type: '기능',
+      assignee: '',
       dueDate: '',
-      assigneeId: '',
       project: '',
       tags: '',
     });
@@ -71,7 +70,6 @@ const CreateTaskDialog = () => {
 
   return (
     <>
-      {/* 상단 “새 Task” 버튼 */}
       <Button
         variant="primary"
         size="medium"
@@ -80,7 +78,6 @@ const CreateTaskDialog = () => {
         ＋ 새 Task
       </Button>
 
-      {/* 네가 만든 Dialog 컴포넌트 사용 */}
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -126,13 +123,32 @@ const CreateTaskDialog = () => {
                   setFormData({ ...formData, priority: e.target.value })
                 }
               >
-                <option value="low">낮음</option>
-                <option value="medium">보통</option>
-                <option value="high">높음</option>
-                <option value="urgent">긴급</option>
+                <option value="낮음">낮음</option>
+                <option value="보통">보통</option>
+                <option value="높음">높음</option>
+                <option value="긴급">긴급</option>
               </select>
             </div>
 
+            <div>
+              <Label htmlFor="status">상태 *</Label>
+              <select
+                id="status"
+                className="mt-1 w-full rounded-md border px-3 py-2 text-sm"
+                value={formData.status}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value })
+                }
+              >
+                <option value="할 일">할 일</option>
+                <option value="진행 중">진행 중</option>
+                <option value="검토">검토</option>
+                <option value="완료">완료</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="type">유형</Label>
               <select
@@ -143,58 +159,52 @@ const CreateTaskDialog = () => {
                   setFormData({ ...formData, type: e.target.value })
                 }
               >
-                <option value="feature">기능</option>
-                <option value="bug">버그</option>
-                <option value="improvement">개선</option>
-                <option value="documentation">문서화</option>
+                <option value="기능">기능</option>
+                <option value="버그">버그</option>
+                <option value="개선">개선</option>
+                <option value="문서">문서</option>
               </select>
             </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="dueDate">마감일</Label>
               <Input
                 id="dueDate"
-                type="date"
+                type="text"
+                placeholder="예: 2025. 12. 31."
                 value={formData.dueDate}
                 onChange={(e) =>
                   setFormData({ ...formData, dueDate: e.target.value })
                 }
               />
             </div>
-
-            <div>
-              <Label htmlFor="assigneeId">담당자</Label>
-              <select
-                id="assigneeId"
-                className="mt-1 w-full rounded-md border px-3 py-2 text-sm"
-                value={formData.assigneeId}
-                onChange={(e) =>
-                  setFormData({ ...formData, assigneeId: e.target.value })
-                }
-              >
-                <option value="">담당자 선택</option>
-                {mockUsers.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
-            </div>
           </div>
 
-          <div>
-            <Label htmlFor="project">프로젝트/리스트 *</Label>
-            <Input
-              id="project"
-              required
-              value={formData.project}
-              onChange={(e) =>
-                setFormData({ ...formData, project: e.target.value })
-              }
-              placeholder="프로젝트 이름"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="assignee">담당자</Label>
+              <Input
+                id="assignee"
+                value={formData.assignee}
+                onChange={(e) =>
+                  setFormData({ ...formData, assignee: e.target.value })
+                }
+                placeholder="담당자 이름"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="project">프로젝트 *</Label>
+              <Input
+                id="project"
+                required
+                value={formData.project}
+                onChange={(e) =>
+                  setFormData({ ...formData, project: e.target.value })
+                }
+                placeholder="프로젝트 이름"
+              />
+            </div>
           </div>
 
           <div>
@@ -205,7 +215,7 @@ const CreateTaskDialog = () => {
               onChange={(e) =>
                 setFormData({ ...formData, tags: e.target.value })
               }
-              placeholder="태그를 쉼표로 구분하여 입력"
+              placeholder="태그를 쉼표로 구분하여 입력 (예: UI, Backend)"
             />
           </div>
 
@@ -225,6 +235,4 @@ const CreateTaskDialog = () => {
       </Dialog>
     </>
   );
-};
-
-export default CreateTaskDialog;
+}
