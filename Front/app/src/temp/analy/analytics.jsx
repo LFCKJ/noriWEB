@@ -7,79 +7,9 @@ import './Analytics.css'; // 기본 스타일
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
 // --- 1. 더미 Task 데이터 정의 ---
-const DUMMY_TASKS = [
-  {
-    id: 1,
-    title: '메인 페이지 UI 구현',
-    status: '완료',
-    priority: '높음',
-    type: '기능',
-    project: '웹사이트 리뉴얼',
-    assignee: '김철수',
-    tags: ['UI', 'Frontend', 'Feature']
-  },
-  {
-    id: 2,
-    title: '로그인 API 설계',
-    status: '진행 중',
-    priority: '긴급',
-    type: '기능',
-    project: 'API 개발',
-    assignee: '이영희',
-    tags: ['Backend', 'Database']
-  },
-  {
-    id: 3,
-    title: '버튼 클릭 오류 수정',
-    status: '할 일',
-    priority: '긴급',
-    type: '버그',
-    project: '웹사이트 리뉴얼',
-    assignee: '박민수',
-    tags: ['UI', 'Bug']
-  },
-  {
-    id: 4,
-    title: '데이터베이스 최적화 검토',
-    status: '진행 중',
-    priority: '보통',
-    type: '개선',
-    project: '웹사이트 리뉴얼',
-    assignee: '정수진',
-    tags: ['Backend', 'Performance']
-  },
-  {
-    id: 5,
-    title: '이용 가이드 문서 초안 작성',
-    status: '진행 중',
-    priority: '낮음',
-    type: '문서화',
-    project: '웹사이트 리뉴얼',
-    assignee: '김철수',
-    tags: ['Documentation']
-  },
-  {
-    id: 6,
-    title: '모바일 뷰 초기 설정',
-    status: '완료',
-    priority: '보통',
-    type: '기능',
-    project: 'API 개발',
-    assignee: '이영희',
-    tags: ['Mobile', 'Feature']
-  },
-  {
-    id: 7,
-    title: '프론트웹 설정',
-    status: '진행 중',
-    priority: '긴급',
-    type: '기능',
-    project: 'API 개발',
-    assignee: '이수호',
-    tags: ['FRONT', 'Feature']
-  }
-];
 
+ const { tasks, updateTask } = useTaskContext();
+ 
 // --- 공통 컴포넌트 및 색상 정의 ---
 const COLORS = {
   '할 일': '#A0A0A0', // 회색
