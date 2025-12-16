@@ -39,7 +39,10 @@ export default function Frame() {
   const tempMenus = [
     { id: 'kanban', name: '대시보드', path: '/temp/kanban', icon: '칸반' },
     { id: 'tasks', name: '대시보드', path: '/temp/tasks', icon: '테' },
-    { id: 'my-tasks', name: '대시보드', path: '/temp/my-tasks-test', icon: ' 마' }
+    { id: 'my-tasks', name: '대시보드', path: '/temp/my-tasks-test', icon: '마' },
+    { id: 'my-tasks', name: '대시보드', path: '/temp/analytics', icon: '분' },
+    { id: 'my-tasks', name: '대시보드', path: '/temp/shareddrive', icon: '공' },
+    { id: 'my-tasks', name: '대시보드', path: '/temp/settings-test', icon: '설' }
   ];
 
   return (
