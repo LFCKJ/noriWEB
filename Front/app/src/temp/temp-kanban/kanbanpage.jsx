@@ -39,11 +39,10 @@ export default function Kanbanpage() {
   }, [tasks, searchQuery, assigneeFilter, priorityFilter, statusFilter]);
 
   const columns = [
-    { status: '할 일', color: 'bg-slate-100' },
+    { status: '할 일',   color: 'bg-slate-100' },
     { status: '진행 중', color: 'bg-blue-100' },
-    { status: '검토', color: 'bg-purple-100' },
-    { status: '완료', color: 'bg-green-100' },
-    { status: '대기 중', color: 'bg-yellow-100' },
+    { status: '검토',   color: 'bg-purple-100' },
+    { status: '완료',   color: 'bg-green-100' },
   ];
 
   const getPriorityColor = (priority) => {
@@ -92,7 +91,7 @@ export default function Kanbanpage() {
       </div>
 
       <TaskFilters
-        tasks={tasks} // 🔹 필터에서 담당자 목록 만들 때 사용
+        tasks={tasks} 
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         assigneeFilter={assigneeFilter}
@@ -103,7 +102,7 @@ export default function Kanbanpage() {
         onStatusFilterChange={setStatusFilter}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4 mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
         {columns.map((col) => {
           const columnTasks = filteredTasks.filter(
             (t) => t.status === col.status
@@ -130,7 +129,7 @@ export default function Kanbanpage() {
                     className={`p-4 border-l-4 ${getPriorityColor(
                       task.priority
                     )}`}
-                    draggable // 🔹 카드 드래그 가능
+                    draggable
                     onDragStart={() => handleDragStart(task.id)}
                   >
                     <h3 className="font-semibold text-sm mb-1">
