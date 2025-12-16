@@ -6,11 +6,9 @@ import Button from '../../components/ui/Button';
 import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 import { Select, SelectTrigger, SelectContent, SelectItem } from './ui/select';
 
-// ⛔ mockUsers, mockData 같은 건 이제 안 씀 (TempControl에서 실제 데이터를 받음)
-// import { mockUsers } from '../temp-kanban/utils/mockData';
 
 const TaskFilters = ({
-  tasks = [], // 🔹 없으면 기본값을 []로 둬서 map 에러 방지
+  tasks = [], 
   searchQuery,
   onSearchChange,
   assigneeFilter,
@@ -33,7 +31,7 @@ const TaskFilters = ({
     onStatusFilterChange('전체');
   };
 
-  // 🔹 TempControl에서 받은 tasks로 담당자 목록 만들기
+
   const assignees = useMemo(() => {
     const safeTasks = Array.isArray(tasks) ? tasks : [];
     const names = safeTasks
@@ -122,7 +120,7 @@ const TaskFilters = ({
                   <SelectItem value="전체">전체</SelectItem>
                   <SelectItem value="긴급">긴급</SelectItem>
                   <SelectItem value="높음">높음</SelectItem>
-                  <SelectItem value="중간">중간</SelectItem>
+                  <SelectItem value="보통">보통</SelectItem>
                   <SelectItem value="낮음">낮음</SelectItem>
                 </SelectContent>
               </Select>
@@ -140,7 +138,6 @@ const TaskFilters = ({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="전체">전체</SelectItem>
-                  <SelectItem value="대기 중">대기 중</SelectItem>
                   <SelectItem value="할 일">할 일</SelectItem>
                   <SelectItem value="진행 중">진행 중</SelectItem>
                   <SelectItem value="검토">검토</SelectItem>
