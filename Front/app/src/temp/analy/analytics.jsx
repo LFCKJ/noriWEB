@@ -1,15 +1,11 @@
 import React, { useMemo } from 'react';
-import { Outlet, useParams } from 'react-router-dom'; // 라우팅 관련 필요 시 유지
+import { Outlet, useOutletContext } from 'react-router-dom'; // 라우팅 관련 필요 시 유지
 import './Analytics.css'; // 기본 스타일
 // import './AnalyticsDashboard.css'; // 대시보드 레이아웃 스타일
 
 // Recharts 라이브러리에서 필요한 컴포넌트 임포트
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
-// --- 1. 더미 Task 데이터 정의 ---
-
- const { tasks, updateTask } = useTaskContext();
- 
 // --- 공통 컴포넌트 및 색상 정의 ---
 const COLORS = {
   '할 일': '#A0A0A0', // 회색
@@ -204,7 +200,10 @@ const PriorityBarChart = ({ data }) => {
 // --- 대시보드 메인 컴포넌트 ---
 export default function AnalyticsDashboard() {
   // useMemo를 사용하여 Task 데이터가 변경될 때만 분석을 다시 수행 (성능 최적화)
-  const analyticsData = useMemo(() => analyzeTasks(DUMMY_TASKS), []);
+  // --- 1. 더미 Task 데이터 정의 ---
+
+  const [tasks] = useOutletContext();
+  const analyticsData = useMemo(() => analyzeTasks(tasks), [tasks]);
 
   const {
     total,
